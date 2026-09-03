@@ -1,0 +1,7 @@
+{
+  "env": {
+    "VISION_API_KEY": "70e9ca2110de4931ba30a41797ad60b5.hk4NGjwbMJIPjBKA",
+    "VISION_BASE_URL": "https://open.bigmodel.cn/api/paas/v4",
+    "VISION_MODEL": "GLM-4V-Flash"
+  }
+}

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TAKE YOUR TIME — 学习进度管理</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Noto+Sans+SC:wght@400;700;900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+  <div id="bgLayer">
+    <div class="bg-image bg-image-a"></div>
+    <div class="bg-image bg-image-b"></div>
+  </div>
+  <div id="bgGlyph" aria-hidden="true">T</div>
+  <div id="bgFragments" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <!-- ============ 载入画面 ============ -->
+  <div id="splash">
+    <div class="splash-inner">
+      <div class="splash-logo">TAKE YOUR<span class="moon">☾</span>TIME</div>
+      <div class="splash-sub">学習進捗管理 // MEMENTO MORI</div>
+      <div class="splash-bar">
+        <div class="splash-fill"></div>
+      </div>
+      <div class="splash-loading">NOW LOADING…</div>
+    </div>
+  </div>
+
+  <div id="app">
+
+    <!-- ============ 顶部 HUD ============ -->
+    <header class="hud">
+      <div class="hud-left">
+        <div class="logo">TAKE YOUR<span class="moon">☾</span>TIME</div>
+        <div class="logo-sub">学習進捗管理</div>
+      </div>
+
+      <div class="hud-center">
+        <div class="date-big">
+          <span class="date-year" id="hudYear">2026</span>
+          <span class="date-slash">/</span>
+          <span class="date-md" id="hudMonth">09</span>
+          <span class="date-slash">/</span>
+          <span class="date-md" id="hudDay">03</span>
+          <span class="date-week" id="hudDow">WED</span>
+        </div>
+      </div>
+
+      <div class="hud-right">
+        <div class="clock" id="hudClock">00:00:00</div>
+        <div class="hud-stats">
+          <span class="stat-pill">今日 <b id="hudToday">0m</b></span>
+          <span class="stat-pill">本周 <b id="hudWeek">0m</b></span>
+          <span class="stat-pill">连续 <b id="hudStreak">0</b>天</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- ============ 侧边导航 ============ -->
+    <nav class="sidebar">
+      <ul class="nav-list" id="navList">
+        <li class="nav-item active" data-page="home"><span class="nav-en" data-label="HOME">HOME</span><span
+            class="nav-cn">首页总览</span></li>
+        <li class="nav-item" data-page="schedule"><span class="nav-en" data-label="SCHEDULE">SCHEDULE</span><span
+            class="nav-cn">每日时间轴</span></li>
+        <li class="nav-item" data-page="todo"><span class="nav-en" data-label="TO-DO">TO-DO</span><span
+            class="nav-cn">待办清单</span></li>
+        <li class="nav-item" data-page="goals"><span class="nav-en" data-label="OBJECTIVES">OBJECTIVES</span><span
+            class="nav-cn">分层目标</span></li>
+        <li class="nav-item" data-page="planning"><span class="nav-en" data-label="CONFIDANTS">CONFIDANTS</span><span
+            class="nav-cn">长期规划</span></li>
+        <li class="nav-item" data-page="calendar"><span class="nav-en" data-label="CALENDAR">CALENDAR</span><span
+            class="nav-cn">日历</span></li>
+        <li class="nav-item" data-page="timer"><span class="nav-en" data-label="STUDY TIME">STUDY TIME</span><span
+            class="nav-cn">学习计时</span></li>
+        <li class="nav-item" data-page="review"><span class="nav-en" data-label="REFLECTION">REFLECTION</span><span
+            class="nav-cn">每日复盘</span></li>
+        <li class="nav-item" data-page="notes"><span class="nav-en" data-label="MEMO">MEMO</span><span
+            class="nav-cn">记事本</span></li>
+      </ul>
+      <div class="nav-foot">© 20XX // MEMENTO MORI</div>
+    </nav>
+
+    <!-- ============ 主内容区 ============ -->
+    <main class="content">
+
+      <!-- ===== 首页 ===== -->
+      <section class="page active" id="page-home">
+        <div class="page-title">
+          <h1>HOME</h1>
+          <p class="page-sub">今日戦況 // 学习进度总览</p>
+        </div>
+        <div class="home-grid">
+          <div class="panel hero-panel">
+            <div class="hero-date" id="homeBigDate">2026.09.03</div>
+            <div class="hero-greet" id="homeGreet">PHANTOM THIEF, TAKE YOUR TIME.</div>
+            <div class="hero-days">今日是专注之旅的 <b id="homeStreakDays">0</b> 天</div>
+            <div class="hero-meters">
+              <div class="meter">
+                <div class="meter-label">今日学习进度</div>
+                <div class="meter-bar">
+                  <div class="meter-fill" id="homeTodayFill" style="width:0%"></div>
+                </div>
+                <div class="meter-val" id="homeTodayVal">0m / 目标 4h</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel stat-panel">
+            <div class="panel-head">OVERVIEW</div>
+            <div class="stat-grid">
+              <div class="stat-box"><span class="stat-num" id="homeTodoDone">0</span><span class="stat-cap">待办完成</span>
+              </div>
+              <div class="stat-box"><span class="stat-num" id="homeTodoLeft">0</span><span class="stat-cap">待办剩余</span>
+              </div>
+              <div class="stat-box"><span class="stat-num" id="homeTodayTime">0m</span><span
+                  class="stat-cap">今日专注</span></div>
+              <div class="stat-box"><span class="stat-num" id="homeGoalRank">0</span><span class="stat-cap">目标达成</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">今日 SCHEDULE</div>
+            <div id="homeSchedule" class="mini-list"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">今日 TO-DO</div>
+            <div id="homeTodo" class="mini-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 时间轴 ===== -->
+      <section class="page" id="page-schedule">
+        <div class="page-title">
+          <h1>SCHEDULE</h1>
+          <p class="page-sub">毎日のタイムライン // 每日时间轴</p>
+        </div>
+        <div class="toolbar">
+          <div class="date-nav">
+            <button class="btn" id="schPrev">◀</button>
+            <span class="toolbar-date" id="schDate">2026.09.03</span>
+            <button class="btn" id="schNext">▶</button>
+            <button class="btn btn-red" id="schToday">TODAY</button>
+            <button class="btn btn-red" id="schAdd">＋ 时间块</button>
+          </div>
+        </div>
+        <div class="schedule-wrap">
+          <div class="timeline" id="timeline"></div>
+        </div>
+      </section>
+
+      <!-- ===== 待办 ===== -->
+      <section class="page" id="page-todo">
+        <div class="page-title">
+          <h1>TO-DO</h1>
+          <p class="page-sub">依頼リスト // 待办清单</p>
+        </div>
+        <div class="toolbar">
+          <div class="todo-input-row">
+            <input class="input" id="todoInput" placeholder="输入新的待办…" />
+            <select class="input select" id="todoPriority">
+              <option value="3">高优先</option>
+              <option value="2" selected>中优先</option>
+              <option value="1">低优先</option>
+            </select>
+            <button class="btn btn-red" id="todoAdd">追加</button>
+          </div>
+          <div class="filter-row">
+            <button class="chip active" data-filter="all">全部</button>
+            <button class="chip" data-filter="active">未完成</button>
+            <button class="chip" data-filter="done">已完成</button>
+          </div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-label">完成度 <span id="todoPct">0%</span></div>
+          <div class="meter-bar big">
+            <div class="meter-fill" id="todoFill" style="width:0%"></div>
+          </div>
+        </div>
+        <ul class="todo-list" id="todoList"></ul>
+      </section>
+
+      <!-- ===== 分层目标 ===== -->
+      <section class="page" id="page-goals">
+        <div class="page-title">
+          <h1>OBJECTIVES</h1>
+          <p class="page-sub">階層目標 // 分层目标设定</p>
+        </div>
+        <div class="toolbar">
+          <div class="todo-input-row">
+            <input class="input" id="goalInput" placeholder="新建一级目标…" />
+            <button class="btn btn-red" id="goalAdd">追加</button>
+          </div>
+        </div>
+        <div class="goal-list" id="goalList"></div>
+      </section>
+
+      <!-- ===== 长期规划 ===== -->
+      <section class="page" id="page-planning">
+        <div class="page-title">
+          <h1>CONFIDANTS</h1>
+          <p class="page-sub">長期プラン // 长期个人规划（Arcana 羁绊）</p>
+        </div>
+        <div class="toolbar">
+          <div class="todo-input-row">
+            <input class="input" id="confInput" placeholder="新建一个长期目标 / 羁绊…" />
+            <select class="input select" id="confArcana">
+              <option>愚者</option>
+              <option>魔术师</option>
+              <option>女教皇</option>
+              <option>女皇</option>
+              <option>皇帝</option>
+              <option>教皇</option>
+              <option>恋人</option>
+              <option>战车</option>
+              <option>力量</option>
+              <option>隐者</option>
+              <option>命运之轮</option>
+              <option>正义</option>
+              <option>倒吊人</option>
+              <option>死神</option>
+              <option>节制</option>
+              <option>恶魔</option>
+              <option>塔</option>
+              <option>星星</option>
+              <option>月亮</option>
+              <option>太阳</option>
+              <option>审判</option>
+            </select>
+            <button class="btn btn-red" id="confAdd">缔结羁绊</button>
+          </div>
+        </div>
+        <div class="conf-list" id="confList"></div>
+      </section>
+
+      <!-- ===== 日历 ===== -->
+      <section class="page" id="page-calendar">
+        <div class="page-title">
+          <h1>CALENDAR</h1>
+          <p class="page-sub">カレンダー // 日历</p>
+        </div>
+        <div class="toolbar">
+          <div class="date-nav">
+            <button class="btn" id="calPrev">◀</button>
+            <span class="toolbar-date" id="calTitle">2026.09</span>
+            <button class="btn" id="calNext">▶</button>
+            <button class="btn btn-red" id="calToday">TODAY</button>
+          </div>
+        </div>
+        <div class="calendar">
+          <div class="cal-week">
+            <span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span
+              class="sun">SUN</span>
+          </div>
+          <div class="cal-grid" id="calGrid"></div>
+        </div>
+        <div class="panel cal-detail" id="calDetail"></div>
+      </section>
+
+      <!-- ===== 计时 ===== -->
+      <section class="page" id="page-timer">
+        <div class="page-title">
+          <h1>STUDY TIME</h1>
+          <p class="page-sub">学習タイマー // 学习计时与记录</p>
+        </div>
+        <div class="timer-wrap">
+          <div class="panel timer-panel">
+            <input class="input timer-subject" id="timerSubject" placeholder="当前学习科目…" />
+            <div class="timer-display" id="timerDisplay">00:00:00</div>
+            <div class="timer-mode" id="timerMode">FOCUS MODE</div>
+            <div class="timer-controls">
+              <button class="btn btn-red big" id="timerStart">开始</button>
+              <button class="btn" id="timerPause">暂停</button>
+              <button class="btn" id="timerReset">归零</button>
+            </div>
+            <div class="timer-finish" id="timerFinish"></div>
+          </div>
+          <div class="panel timer-records">
+            <div class="panel-head">FOCUS RECORDS</div>
+            <ul class="record-list" id="recordList"></ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 复盘 ===== -->
+      <section class="page" id="page-review">
+        <div class="page-title">
+          <h1>REFLECTION</h1>
+          <p class="page-sub">一日の反省 // 每日复盘</p>
+        </div>
+        <div class="toolbar">
+          <div class="date-nav">
+            <button class="btn" id="revPrev">◀</button>
+            <span class="toolbar-date" id="revDate">2026.09.03</span>
+            <button class="btn" id="revNext">▶</button>
+            <button class="btn btn-red" id="revToday">TODAY</button>
+          </div>
+        </div>
+        <div class="review-grid">
+          <div class="panel review-form">
+            <label class="field-label">今日收获 / 成就</label>
+            <textarea class="input textarea" id="revWins" rows="3"></textarea>
+            <label class="field-label">问题与不足</label>
+            <textarea class="input textarea" id="revProblems" rows="3"></textarea>
+            <label class="field-label">明日计划</label>
+            <textarea class="input textarea" id="revTomorrow" rows="3"></textarea>
+            <label class="field-label">今日心情</label>
+            <div class="rate" id="revRate">
+              <span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span
+                data-v="5">★</span>
+            </div>
+            <button class="btn btn-red" id="revSave">保存复盘</button>
+          </div>
+          <div class="panel review-history">
+            <div class="panel-head">PAST REFLECTIONS</div>
+            <ul class="record-list" id="revList"></ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 记事本 ===== -->
+      <section class="page" id="page-notes">
+        <div class="page-title">
+          <h1>MEMO</h1>
+          <p class="page-sub">メモ帳 // 记事本</p>
+        </div>
+        <div class="toolbar">
+          <div class="todo-input-row">
+            <input class="input" id="noteTitle" placeholder="笔记标题…" />
+            <button class="btn btn-red" id="noteAdd">新建</button>
+          </div>
+        </div>
+        <div class="notes-wrap">
+          <div class="panel note-list" id="noteList"></div>
+          <div class="panel note-editor">
+            <input class="input" id="noteEditorTitle" placeholder="标题" />
+            <textarea class="input textarea tall" id="noteEditorBody" placeholder="在这里写下你的笔记…"></textarea>
+            <div class="note-actions">
+              <button class="btn btn-red" id="noteSave">保存</button>
+              <button class="btn" id="noteDelete">删除</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ============ AI 助手（结城理 · 学习任务辅助） ============ -->
+  <div id="assistant">
+    <div class="assistant-advice panel" id="assistantAdvice">
+      <div class="panel-head">结城理 // MAKOTO YUKI</div>
+      <div class="assistant-advice-log" id="assistantAdviceLog"></div>
+    </div>
+
+    <div class="assistant-bubble" id="assistantBubble"><span id="assistantText">TAKE YOUR TIME…</span></div>
+
+    <button class="assistant-figure" id="assistantFigure" title="点击获取学习建议">
+      <img id="assistantImg" src="assistant/0e995e578499cacf2297e604c4e8c4b3.png" alt="结城理" />
+    </button>
+
+    <div class="assistant-toolbar">
+      <button class="btn assistant-btn" id="assistantAdviceBtn">学习建议</button>
+    </div>
+  </div>
+
+  <!-- ============ 通用弹窗 ============ -->
+  <div class="modal-mask" id="modalMask">
+    <div class="modal panel" id="modalBox">
+      <div class="modal-title" id="modalTitle">TITLE</div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-actions" id="modalActions"></div>
+    </div>
+  </div>
+
+  <div class="guide-text">
+    <span class="key">1</span><span class="dash">–</span><span class="key">9</span>
+    <span class="guide-lbl">切换页面</span>
+    <span class="guide-cmd">Command</span>
+  </div>
+  <div id="flash"></div>
+
+  <script src="js/app.js"></script>
+</body>
+
+</html>
